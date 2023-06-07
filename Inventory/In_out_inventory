@@ -1,28 +1,35 @@
 class StockControlSystem:
     def __init__(self):
-        self.stock = []  # List to store stock items
+        self.stock = {}
 
-    def add_item(self, item_id, item_name, price, quantity, store):
-        item = {
-            "item_id": item_id,
-            "item_name": item_name,
-            "price": price,
-            "quantity": quantity,
-            "store": store
-        }
-        self.stock.append(item)
+    def purchase_item(self, item_id, item_name, price, quantity, store):
+        if item_id in self.stock:
+            self.stock[item_id]["quantity"] += quantity
+        else:
+            item = {
+                "item_id": item_id,
+                "item_name": item_name,
+                "price": price,
+                "quantity": quantity,
+                "store": store
+            }
+            self.stock[item_id] = item
 
-    def remove_item(self, item_id):
-        for item in self.stock:
-            if item["item_id"] == item_id:
-                self.stock.remove(item)
-                break
+    def sell_item(self, item_id, quantity):
+        if item_id in self.stock:
+            if quantity >= self.stock[item_id]["quantity"]:
+                del self.stock[item_id]
+            else:
+                self.stock[item_id]["quantity"] -= quantity
+        else:
+            print(f"Item with item ID {item_id} does not exist.")
 
     def get_stock_quantity(self, item_id):
-        for item in self.stock:
-            if item["item_id"] == item_id:
-                return item["quantity"]
-        return 0
+        if item_id in self.stock:
+            return self.stock[item_id]["quantity"]
+        else:
+            print(f"Item with item ID {item_id} does not exist.")
+            return 0
 
     def __str__(self):
         header = "Item ID\tItem Name\tPrice\tQuantity\tStore\n"
@@ -33,26 +40,27 @@ class StockControlSystem:
 
 # Example usage:
 stock_system = StockControlSystem()
-stock_system.add_item(1, "Apple", 0.5, 10, "Store A")
-stock_system.add_item(2, "Banana", 0.25, 5, "Store B")
-stock_system.add_item(3, "Orange", 0.3, 8, "Store A")
+stock_system.purchase_item(1, "Apple", 0.5, 10, "Store A")
+stock_system.purchase_item(2, "Banana", 0.25, 5, "Store B")
+stock_system.purchase_item(3, "Orange", 0.3, 8, "Store A")
+stock_system.purchase_item(4, "Peach", 0.8, 6, "Store B")
 
-stock_system.remove_item(2)
+stock_system.sell_item(2, 2)
 
 print(stock_system.get_stock_quantity(1))  # Output: 10
-print(stock_system.get_stock_quantity(2))  # Output: 0
+print(stock_system.get_stock_quantity(2))  # Output: Item with item ID 2 does not exist.
 
-stock_system.print_stock()
+print(stock_system)
 # Output:
 # Item ID    Item Name    Price    Quantity    Store
 # 1          Apple        0.5      10          Store A
+# 2          Banana       0.25     3           Store B 
 # 3          Orange       0.3      8           Store A
-
-# --------------------
-
-In this updated example, the StockControlSystem class includes the instance variables item_id, item_name, price, quantity, and store. 
-Each stock item is represented as a dictionary with these variables as key-value pairs. The class provides methods to add and remove items from the stock, 
-retrieve the quantity of a specific item by its item_id, and print the current stock status.
+# 4          Peach        0.8      6           Store B
 
 
+In this updated version, the methods add_item and remove_item have been replaced with purchase_item and sell_item respectively. 
+The purchase_item method checks if the item with the given item_id already exists and updates the quantity if it does. Otherwise, 
+it adds a new item to the stock. The sell_item method reduces the quantity of the item by the specified quantity, and if the quantity 
+becomes zero or less, it removes the item from the stock. the __str__ method first defines a header string that represents the column names.
 
