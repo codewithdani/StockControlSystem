@@ -24,15 +24,12 @@ class StockControlSystem:
                 return item["quantity"]
         return 0
 
-    def print_stock(self):
-        print("Stock:")
-        for item in self.stock:
-            print(f"Item ID: {item['item_id']}")
-            print(f"Item Name: {item['item_name']}")
-            print(f"Price: {item['price']}")
-            print(f"Quantity: {item['quantity']}")
-            print(f"Store: {item['store']}")
-            print("--------------------")
+    def __str__(self):
+        header = "Item ID\tItem Name\tPrice\tQuantity\tStore\n"
+        stock_str = header
+        for item_id, item in self.stock.items():
+            stock_str += f"{item['item_id']}\t{item['item_name']}\t{item['price']}\t{item['quantity']}\t{item['store']}\n"
+        return stock_str
 
 # Example usage:
 stock_system = StockControlSystem()
@@ -47,18 +44,10 @@ print(stock_system.get_stock_quantity(2))  # Output: 0
 
 stock_system.print_stock()
 # Output:
-# Stock:
-# Item ID: 1
-# Item Name: Apple
-# Price: 0.5
-# Quantity: 10
-# Store: Store A
-# --------------------
-# Item ID: 3
-# Item Name: Orange
-# Price: 0.3
-# Quantity: 8
-# Store: Store A
+# Item ID    Item Name    Price    Quantity    Store
+# 1          Apple        0.5      10          Store A
+# 3          Orange       0.3      8           Store A
+
 # --------------------
 
 In this updated example, the StockControlSystem class includes the instance variables item_id, item_name, price, quantity, and store. 
