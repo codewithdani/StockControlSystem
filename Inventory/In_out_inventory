@@ -1,0 +1,49 @@
+class StockControlSystem:
+    def __init__(self):
+        self.stock = {}  # Dictionary to store stock items and quantities
+
+    def add_item(self, item_name, quantity):
+        if item_name in self.stock:
+            self.stock[item_name] += quantity
+        else:
+            self.stock[item_name] = quantity
+
+    def remove_item(self, item_name, quantity):
+        if item_name in self.stock:
+            if quantity >= self.stock[item_name]:
+                del self.stock[item_name]
+            else:
+                self.stock[item_name] -= quantity
+
+    def get_stock_quantity(self, item_name):
+        if item_name in self.stock:
+            return self.stock[item_name]
+        else:
+            return 0
+
+    def print_stock(self):
+        print("Stock:")
+        for item_name, quantity in self.stock.items():
+            print(f"{item_name}: {quantity}")
+
+# Example usage:
+stock_system = StockControlSystem()
+stock_system.add_item("Apple", 10)
+stock_system.add_item("Banana", 5)
+stock_system.add_item("Apple", 5)
+stock_system.remove_item("Banana", 2)
+
+print(stock_system.get_stock_quantity("Apple"))  # Output: 15
+print(stock_system.get_stock_quantity("Banana"))  # Output: 3
+
+stock_system.print_stock()
+# Output:
+# Stock:
+# Apple: 15
+# Banana: 3
+
+In this case, the StockControlSystem class manages the stock items using a dictionary where the keys are item names 
+and the values are the quantities. The class provides methods to add(purchase) and remove(sale) items from the stock, 
+retrieve the quantity of a specific item, and print the current stock status.
+
+
