@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Stock Control System</title>
+</head>
+<body>
+    <h1>Stock Control System</h1>
+
+    <h2>Stock Items</h2>
+    <table>
+        <tr>
+            <th>Item ID</th>
+            <th>Item Name</th>
+            <th>Price</th>
+            <th>Quantity</th>
+            <th>Store</th>
+        </tr>
+        {% for stock_item in stock_items %}
+        <tr>
+            <td>{{ stock_item.item_id }}</td>
+            <td>{{ stock_item.item_name }}</td>
+            <td>{{ stock_item.price }}</td>
+            <td>{{ stock_item.quantity }}</td>
+            <td>{{ stock_item.store }}</td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="5">No stock items found.</td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    <h2>Purchases</h2>
+    <table>
+        <tr>
+            <th>Purchase ID</th>
+            <th>Item</th>
+            <th>Quantity</th>
+            <th>Purchase Date</th>
+        </tr>
+        {% for purchase in purchases %}
+        <tr>
+            <td>{{ purchase.purchase_id }}</td>
+            <td>{{ purchase.item.item_name }}</td>
+            <td>{{ purchase.quantity }}</td>
+            <td>{{ purchase.purchase_date }}</td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="4">No purchases found.</td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    <h2>Sales</h2>
+    <table>
+        <tr>
+            <th>Sale ID</th>
+            <th>Item</th>
+            <th>Quantity</th>
+            <th>Sale Date</th>
+        </tr>
+        {% for sale in sales %}
+        <tr>
+            <td>{{ sale.sale_id }}</td>
+            <td>{{ sale.item.item_name }}</td>
+            <td>{{ sale.quantity }}</td>
+            <td>{{ sale.sale_date }}</td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="4">No sales found.</td>
+        </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>
+In this template, we have sections for displaying stock items, purchases, and sales. 
+The data is looped over using Django template tags ({% for %} and {% empty %}) to iterate through the corresponding objects 
+and display their properties in a tabular format.
+
+Note that you may need to customize this template based on your specific requirements and the structure of your models. 
+Additionally, you can apply CSS styles or further HTML modifications to enhance the appearance and functionality of the stock control system web page.
